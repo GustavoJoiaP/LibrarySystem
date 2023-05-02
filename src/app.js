@@ -1,13 +1,22 @@
 import express from "express"; 
+import dbConnection from "./config/dbConnect.js"
+import books from "./Models/Book.js";
+
+dbConnection.on("error", console.log.bind(console, 'Erro de conexão'))
+dbConnection.once("open", () => {
+    console.log('MongoDb connection success')
+})
+
+
 
 const app = express();
 
 app.use(express.json())
 
-let books = [
-    {Id: 1, "Titulo": "Domain Drivem Design"},
-    {Id: 2, "Titulo": "Clean Code"}
-]
+// let books = [
+//     {Id: 1, "Titulo": "Domain Drivem Design"},
+//     {Id: 2, "Titulo": "Clean Code"}
+// ]
 
 app.get('/', (req, res) => {
     res.status(200).send('Libery System');
