@@ -1,6 +1,6 @@
 import express from "express"; 
 import dbConnection from "./config/dbConnect.js"
-import books from "./Models/Book.js";
+import Books from "./Models/Book.js"
 
 dbConnection.on("error", console.log.bind(console, 'Erro de conexão'))
 dbConnection.once("open", () => {
@@ -23,8 +23,12 @@ app.get('/', (req, res) => {
 })
 
 app.get('/books', (req, res) => {
-    res.status(200).json(books)
-})
+    console.log(dbConnection.collection("Books").find());
+    Books.find((err, Books) => {
+      res.status(200).json(Books)
+    })
+  
+  })
 
 app.get('/books/:Id', (req, res) => {
     let index = FindBook(req.params.Id);
